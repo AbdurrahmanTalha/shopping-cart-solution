@@ -1,28 +1,44 @@
-function updateCaseNumber(isIncreseing, itemNumber, itemTotal, price) {
-    const itemInput = document.getElementById(itemNumber);
-    itemNumber = itemInput.value;
+function updateCaseNumber(isIncreseing, product, price) {
+    const productInput = document.getElementById(product + '-number');
+    let productNumber = productInput.value;
     if (isIncreseing == true) {
-        itemNumber = parseInt(itemNumber) + 1;
+        productNumber = parseInt(productNumber) + 1;
     }
-    else if (itemNumber > 0) {
-        itemNumber = parseInt(itemNumber) - 1;
+    else if (productNumber > 0) {
+        productNumber = parseInt(productNumber) - 1;
     }
-    itemInput.value = itemNumber
+    productInput.value = productNumber
 
-    const caseTotal = document.getElementById(itemTotal)
-    caseTotal.innerText = parseInt(itemNumber) * price
+    const productTotal = document.getElementById(product + '-total')
+    productTotal.innerText = productNumber * price
+    // calculate Total
+    calculateTotal()
 }
+function getInputValue(product) {
+    const productInput = document.getElementById(product + '-number');
+    const productNumber = parseInt(productInput.value);
+    return productNumber;
+}
+function calculateTotal() {
+    const phoneTotal = getInputValue('phone') * 1219;
+    const caseTotal = getInputValue('case') * 59
+    const subTotal = phoneTotal + caseTotal;
+    const tax = subTotal / 10
+    document.getElementById('sub-total').innerText = subTotal
+    document.getElementById('tax-amount').innerText = tax;
+    document.getElementById('total-price').innerText = subTotal + tax;
+}
+
 document.getElementById('case-plus').addEventListener('click', function () {
-    updateCaseNumber(true, 'case-number', 'case-total', 59)
+    updateCaseNumber(true, 'case', 59)
 })
 document.getElementById('case-minus').addEventListener('click', function () {
-    updateCaseNumber(false, 'case-number', 'case-total', 59)
+    updateCaseNumber(false, 'case', 59)
 })
 document.getElementById('phone-plus').addEventListener('click', function () {
-    updateCaseNumber(true, 'phone-number', 'phone-total', 1219)
+    updateCaseNumber(true, 'phone', 1219)
 })
-
-
 document.getElementById('phone-minus').addEventListener('click', function () {
-    updateCaseNumber(false, 'phone-number', 'phone-total', 1219)
+    updateCaseNumber(false, 'phone', 1219)
 })
+
